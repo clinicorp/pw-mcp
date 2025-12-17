@@ -49,9 +49,9 @@ module.exports = defineConfig({
     headless: false,
     
     // Slow motion: adiciona delay de 2 segundos entre ações para melhor visualização
-    launchOptions: {
-      slowMo: 2000,
-    },
+    //launchOptions: {
+     // slowMo: 2000,
+    //},
   },
 
   // Configurar projetos para múltiplos browsers
@@ -60,9 +60,9 @@ module.exports = defineConfig({
       name: 'chromium',
       use: { 
         ...devices['Desktop Chrome'],
-        launchOptions: {
-          slowMo: 2000,
-        },
+        // launchOptions: {
+        //   slowMo: 2000,
+        // },
       },
     },
 
@@ -70,9 +70,9 @@ module.exports = defineConfig({
       name: 'firefox',
       use: { 
         ...devices['Desktop Firefox'],
-        launchOptions: {
-          slowMo: 2000,
-        },
+        // launchOptions: {
+        //   slowMo: 2000,
+        // },
       },
     },
 
@@ -80,9 +80,9 @@ module.exports = defineConfig({
       name: 'webkit',
       use: { 
         ...devices['Desktop Safari'],
-        launchOptions: {
-          slowMo: 2000,
-        },
+        // launchOptions: {
+        //   slowMo: 2000,
+        // },
       },
     },
   ],
