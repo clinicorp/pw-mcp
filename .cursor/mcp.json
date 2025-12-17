@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ],
+      "env": {
+        "PATH": "/Users/douglasqueiroz/.nvm/versions/node/v24.12.0/bin:${env:PATH}"
+      }
+    }
+  }
+}

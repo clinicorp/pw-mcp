@@ -1,0 +1,7 @@
+login: https://www.saucedemo.com/
+lista-produtos: https://www.saucedemo.com/inventory.html
+detalhes-produto: https://www.saucedemo.com/inventory-item.html?id=4
+carrinho: https://www.saucedemo.com/cart.html
+checkout-step-one: https://www.saucedemo.com/checkout-step-one.html
+checkout-step-two: https://www.saucedemo.com/checkout-step-two.html
+checkout-complete: https://www.saucedemo.com/checkout-complete.html
