@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC - Padrão Clinicorp data-testid</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .btn-secondary {
+            background-color: #2196F3;
+        }
+        .btn-secondary:hover {
+            background-color: #0b7dda;
+        }
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #f9f9f9;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #ff9800;
+            color: white;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 data-testid="lbl-title-PAC">Cadastro de Paciente - Módulo PAC</h1>
+        
+        <form id="patientForm">
+            <div class="form-group">
+                <label data-testid="lbl-name-PAC">Nome do Paciente</label>
+                <input 
+                    type="text" 
+                    data-testid="txt-name-PAC" 
+                    placeholder="Digite o nome do paciente"
+                    required
+                />
+            </div>
+
+            <div class="form-group">
+                <label data-testid="lbl-email-PAC">Email</label>
+                <input 
+                    type="email" 
+                    data-testid="txt-email-PAC" 
+                    placeholder="Digite o email"
+                    required
+                />
+            </div>
+
+            <div class="form-group">
+                <label data-testid="lbl-status-PAC">Status</label>
+                <select data-testid="sel-status-PAC" required>
+                    <option value="">Selecione...</option>
+                    <option value="active">Ativo</option>
+                    <option value="inactive">Inativo</option>
+                    <option value="pending">Pendente</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input 
+                        type="checkbox" 
+                        data-testid="chk-agree-PAC"
+                        required
+                    />
+                    <span data-testid="lbl-agree-PAC">Concordo com os termos</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <button 
+                    type="submit" 
+                    data-testid="btn-save-PAC"
+                >
+                    Salvar
+                </button>
+                <button 
+                    type="button" 
+                    data-testid="btn-cancel-PAC"
+                    class="btn-secondary"
+                >
+                    Cancelar
+                </button>
+            </div>
+        </form>
+
+        <div id="message" class="message success" data-testid="div-message-PAC">
+            <strong data-testid="spn-message-PAC">Paciente salvo com sucesso!</strong>
+        </div>
+
+        <h2 data-testid="lbl-list-PAC">Lista de Pacientes</h2>
+        
+        <div class="card" data-testid="crd-patient-PAC-1">
+            <h3 data-testid="lbl-patient-name-PAC-1">João Silva</h3>
+            <p data-testid="spn-patient-email-PAC-1">joao.silva@email.com</p>
+            <span class="badge" data-testid="bdg-status-PAC-1">Ativo</span>
+            <button data-testid="btn-edit-PAC-1">Editar</button>
+            <button data-testid="btn-delete-PAC-1" style="background-color: #f44336;">Excluir</button>
+        </div>
+
+        <div class="card" data-testid="crd-patient-PAC-2">
+            <h3 data-testid="lbl-patient-name-PAC-2">Maria Santos</h3>
+            <p data-testid="spn-patient-email-PAC-2">maria.santos@email.com</p>
+            <span class="badge" data-testid="bdg-status-PAC-2">Pendente</span>
+            <button data-testid="btn-edit-PAC-2">Editar</button>
+            <button data-testid="btn-delete-PAC-2" style="background-color: #f44336;">Excluir</button>
+        </div>
+
+        <div class="card" data-testid="crd-patient-PAC-3">
+            <h3 data-testid="lbl-patient-name-PAC-3">Pedro Oliveira</h3>
+            <p data-testid="spn-patient-email-PAC-3">pedro.oliveira@email.com</p>
+            <span class="badge" data-testid="bdg-status-PAC-3">Inativo</span>
+            <button data-testid="btn-edit-PAC-3">Editar</button>
+            <button data-testid="btn-delete-PAC-3" style="background-color: #f44336;">Excluir</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('patientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const messageDiv = document.getElementById('message');
+            messageDiv.style.display = 'block';
+            messageDiv.textContent = 'Paciente salvo com sucesso!';
+            
+            // Limpar formulário
+            this.reset();
+            
+            // Esconder mensagem após 3 segundos
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        });
+
+        document.querySelector('[data-testid="btn-cancel-PAC"]').addEventListener('click', function() {
+            document.getElementById('patientForm').reset();
+        });
+    </script>
+</body>
+</html>
+

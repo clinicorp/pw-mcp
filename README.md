@@ -143,87 +143,181 @@ test('login test', async ({ page }) => {
 
 ## 🎨 Boas Práticas e Padrões
 
-### 🔍 Seletores: A Importância de `data-test` e `data-testid`
+### 🔍 Padrão Clinicorp: `data-testid`
 
-Na **Clinicorp**, seguimos o padrão de usar atributos `data-test` ou `data-testid` para identificar elementos em testes. Esta prática é fundamental para testes robustos e manuteníveis.
+Na **Clinicorp**, seguimos um padrão rigoroso e bem definido para o uso do atributo `data-testid` em todos os componentes frontend. Este padrão é **obrigatório** para elementos relevantes para automação de testes e facilita a manutenção e rastreabilidade.
 
-#### ❌ Evite Seletores Frágeis
+### 📐 Diretrizes Gerais
+
+#### 1. Obrigatoriedade
+✅ **Todos os elementos relevantes para automação de testes devem conter o atributo `data-testid`.**
+
+#### 2. Padrão de Nomenclatura
+
+O valor do `data-testid` deve seguir o padrão:
+
+```
+[sigla do elemento]-[nome da tela ou funcionalidade]-[sigla do módulo]
+```
+
+**Exemplo:**
+```html
+<button data-testid="btn-schedule-ODO">Agendar</button>
+```
+- `btn` = sigla do elemento (Button)
+- `schedule` = nome da funcionalidade (agendamento)
+- `ODO` = sigla do módulo
+
+#### 3. Elementos em Lista
+
+Para elementos que aparecem em listas ou são renderizados múltiplas vezes, adicionar o **índice ao final**:
+
+```html
+<!-- Primeiro item -->
+<button data-testid="btn-edit-ODO-1">Editar</button>
+
+<!-- Segundo item -->
+<button data-testid="btn-edit-ODO-2">Editar</button>
+```
+
+### 📋 Siglas Padronizadas de Elementos
+
+| Elemento | Sigla | Exemplo |
+|----------|-------|---------|
+| Button | `btn` | `btn-save-PAC` |
+| Label | `lbl` | `lbl-title-FIN` |
+| Input | `txt` ou `inp` | `txt-search-PAC` |
+| Select | `sel` | `sel-status-FOU` |
+| Div | `div` | `div-container-ADM` |
+| Span | `spn` | `spn-message-ODO` |
+| Checkbox | `chk` | `chk-agree-PAC` |
+| Radio | `rdo` | `rdo-option-FIN` |
+| Link | `lnk` | `lnk-details-ODO` |
+| Tabela | `tbl` | `tbl-users-ADM` |
+| Linha | `row` | `row-patient-PAC` |
+| Coluna | `col` | `col-name-FIN` |
+| Ícone | `ico` | `ico-edit-ODO` |
+| Modal | `mdl` | `mdl-confirm-PAC` |
+| Card | `crd` | `crd-product-FOU` |
+| Tooltip | `tip` | `tip-help-ADM` |
+| Avatar | `avt` | `avt-user-FIN` |
+| Badge | `bdg` | `bdg-status-ODO` |
+
+### 💡 Exemplos Práticos
+
+#### Botão de salvar em tela de cadastro do módulo PAC
+```html
+<button data-testid="btn-save-PAC">Salvar</button>
+```
+
+#### Input de busca na tela de pacientes do módulo PAC
+```html
+<input data-testid="inp-search-PAC" type="text" />
+```
+
+#### Label de título na tela de financeiro do módulo FIN
+```html
+<label data-testid="lbl-title-FIN">Financeiro</label>
+```
+
+#### Botão de editar em uma lista (índice 3) na tela de usuários do módulo ADM
+```html
+<button data-testid="btn-editar-ADM-3">Editar</button>
+```
+
+#### Select de status em tela de agendamento do módulo FOU
+```html
+<select data-testid="sel-status-FOU">
+  <option value="active">Ativo</option>
+  <option value="inactive">Inativo</option>
+</select>
+```
+
+### 🎯 Uso no Playwright
+
+```javascript
+// Método recomendado: getByTestId()
+await page.getByTestId('btn-save-PAC').click();
+await page.getByTestId('inp-search-PAC').fill('João Silva');
+
+// Alternativa: locator com data-testid
+await page.locator('[data-testid="btn-save-PAC"]').click();
+```
+
+### 📝 Exemplo Prático com Page Object
+
+```javascript
+// Page Object usando padrão Clinicorp
+class PacientePage {
+  constructor(page) {
+    this.page = page;
+    // ✅ Seletores seguindo padrão Clinicorp
+    this.searchInput = page.getByTestId('inp-search-PAC');
+    this.saveButton = page.getByTestId('btn-save-PAC');
+    this.titleLabel = page.getByTestId('lbl-title-PAC');
+  }
+
+  async buscarPaciente(nome) {
+    await this.searchInput.fill(nome);
+  }
+
+  async salvar() {
+    await this.saveButton.click();
+  }
+}
+```
+
+### ⚠️ Regras Importantes
+
+1. ✅ **Sempre utilize nomes claros e objetivos** para a tela/funcionalidade
+2. ✅ **Utilize siglas de módulo padronizadas** e documentadas
+3. ❌ **Não utilize espaços ou caracteres especiais** no valor do `data-testid`
+4. ✅ **Para componentes reutilizáveis**, permita a passagem do `data-testid` via props
+5. ✅ **Documente novos padrões** ou exceções
+
+### 🎯 Por que este Padrão é Importante?
+
+| Benefício | Descrição |
+|-----------|-----------|
+| **Facilita Automação** | Testes mais robustos e fáceis de escrever |
+| **Reduz Manutenção** | Seletores estáveis não quebram com mudanças de CSS |
+| **Melhora Rastreabilidade** | Fácil identificar qual módulo/tela cada elemento pertence |
+| **Padroniza Comunicação** | QAs e Devs falam a mesma "língua" |
+| **Colaboração** | Desenvolvedores sabem quais elementos são testados |
+
+### 🔄 Fluxos de Implementação
+
+Na Clinicorp, o `data-testid` pode ser implementado em diferentes contextos:
+
+1. **Bitcloud** - Componentes compartilhados
+2. **Repositório DEV** - Componentes específicos do projeto
+3. **Storybook** - Documentação de componentes
+4. **React Components** - Props para passar `data-testid`
+
+### 📚 Componentes Mapeados
+
+Alguns componentes já foram mapeados com suporte a `data-testid`:
+
+- `<C_ButtonIcon>` - Botão com ícone
+- `<ButtonRC>` - Botão React Component
+- `<C_ButtonFlat>` - Botão flat
+- `<TextField>` - Campo de texto
+- `<C_Search>` - Componente de busca
+- `<TabContainer>` - Container de abas
+- E outros...
+
+---
+
+### ❌ Evite Seletores Frágeis
 
 ```javascript
 // ❌ RUIM: Seletores baseados em CSS podem quebrar facilmente
 await page.click('.btn-primary'); // Quebra se mudar a classe CSS
 await page.click('#submit-btn');  // Quebra se mudar o ID
 await page.click('div > button'); // Muito genérico, pode selecionar elemento errado
-```
 
-#### ✅ Use Atributos `data-test` ou `data-testid`
-
-```javascript
-// ✅ BOM: Seletores estáveis e semânticos
-await page.click('[data-test="login-button"]');
-await page.fill('[data-test="username-input"]', 'user');
-await expect(page.locator('[data-test="welcome-message"]')).toBeVisible();
-```
-
-### 📋 Convenções na Clinicorp
-
-1. **Nomenclatura Consistente**
-   ```html
-   <!-- Use kebab-case para nomes compostos -->
-   <button data-test="add-to-cart-button">Adicionar</button>
-   <input data-test="user-email-input" type="email">
-   <div data-test="product-card-container">
-   ```
-
-2. **Padrão de Nomenclatura**
-   ```
-   [elemento]-[ação/contexto]-[tipo]
-   
-   Exemplos:
-   - login-submit-button
-   - product-card-title
-   - checkout-form-container
-   - user-profile-avatar-image
-   ```
-
-3. **Uso no Playwright**
-   ```javascript
-   // Método recomendado: getByTestId()
-   await page.getByTestId('login-button').click();
-   
-   // Alternativa: locator com data-test
-   await page.locator('[data-test="login-button"]').click();
-   ```
-
-### 🎯 Por que `data-test` é Importante?
-
-| Vantagem | Descrição |
-|----------|-----------|
-| **Estabilidade** | Não quebra quando CSS/HTML muda |
-| **Semântica** | Deixa claro que o elemento é usado em testes |
-| **Manutenibilidade** | Fácil de encontrar e atualizar |
-| **Performance** | Seletores mais rápidos que CSS complexos |
-| **Colaboração** | Desenvolvedores sabem quais elementos são testados |
-
-### 📝 Exemplo Prático
-
-```javascript
-// Page Object usando data-test
-class LoginPage {
-  constructor(page) {
-    this.page = page;
-    // ✅ Seletores estáveis com data-test
-    this.usernameInput = page.locator('[data-test="username-input"]');
-    this.passwordInput = page.locator('[data-test="password-input"]');
-    this.loginButton = page.locator('[data-test="login-submit-button"]');
-  }
-
-  async login(username, password) {
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
-    await this.loginButton.click();
-  }
-}
+// ✅ BOM: Use o padrão Clinicorp com data-testid
+await page.getByTestId('btn-save-PAC').click();
 ```
 
 ---
