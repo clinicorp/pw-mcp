@@ -340,14 +340,18 @@ launchOptions: {
 | Característica | Playwright | Cypress |
 |---------------|------------|---------|
 | Multi-browser | ✅ Chromium, Firefox, WebKit | ✅ Chrome, Edge, Firefox, WebKit* |
-| Parallelização | ✅ Nativa e robusta | ⚠️ Limitada (requer Cypress Dashboard) |
+| Parallelização | ✅ Nativa (sem custos) | ⚠️ Requer Cypress Dashboard (pago) ou configuração manual |
 | Mobile Testing | ✅ Emulação nativa | ⚠️ Limitada |
 | Network Mock | ✅ Interceptação avançada | ✅ Interceptação (cy.intercept) |
 | Execução | ✅ Headless e headed | ⚠️ Focado em desenvolvimento |
 | Arquitetura | ✅ Fora do browser | ⚠️ Dentro do browser |
-| Performance | ✅ Muito rápido | ⚠️ Mais lento |
+| Performance | ✅ ~2-4x mais rápido* | ⚠️ Mais lento devido à arquitetura |
 
-*Cypress suporta múltiplos browsers, mas com algumas limitações em Firefox e WebKit comparado ao suporte completo do Playwright.
+*Baseado em benchmarks: Playwright executa testes aproximadamente 2-4x mais rápido que Cypress devido à sua arquitetura que interage diretamente com o DevTools Protocol, enquanto Cypress roda dentro do browser, introduzindo overhead adicional.
+
+**Notas:**
+- Cypress suporta múltiplos browsers, mas com algumas limitações em Firefox e WebKit comparado ao suporte completo do Playwright.
+- Parallelização no Cypress: A parallelização nativa requer Cypress Dashboard Service (plano pago). Alternativas open-source existem, mas requerem configuração manual e não são tão robustas quanto a solução nativa do Playwright.
 
 ---
 
