@@ -392,7 +392,7 @@ Desenvolvido pela equipe **Clinicorp Engineering**
 
 <div align="center">
 
-**Feito com ❤️ usando [Playwright](https://playwright.dev/)**
+**❤️ pwzin [Playwright](https://playwright.dev/)**
 
 [⬆ Voltar ao topo](#-playwright-test-automation-framework)
 
